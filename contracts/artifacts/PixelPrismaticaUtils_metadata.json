@@ -1,0 +1,429 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getBlueColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "_selector",
+						"type": "bytes4"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getCyanColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getGreenBlueColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getGreenColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getInitialSeed",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getMagentaColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getMonochromeColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getRainbowDarkColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getRainbowLightColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getRedBlueColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getRedColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getRedGreenColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "getYellowColorString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "",
+						"type": "uint256[2]"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "n",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "nextInt",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "n",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[2]",
+						"name": "RND",
+						"type": "uint256[2]"
+					}
+				],
+				"name": "nextInt2P",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/pixel_prismatica_utils.sol": "PixelPrismaticaUtils"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/pixel_prismatica_utils.sol": {
+			"keccak256": "0x3033a79a5496cf80088e91882a33e8cc2f2961a7480739926f11fa596f9f3da5",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://d22392d966154d31404762f8d752f1e0d665e3f477130091197625f6bec7e700",
+				"dweb:/ipfs/QmTwYKTf7nEZLBRqoPGoCaPpcou9ha8cjV1YuKPRXYjo41"
+			]
+		}
+	},
+	"version": 1
+}

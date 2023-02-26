@@ -1,0 +1,673 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "ownerAddress",
+						"type": "address"
+					}
+				],
+				"name": "NotOwnerError",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "ownerSuccessorAddress",
+						"type": "address"
+					}
+				],
+				"name": "NotOwnerSuccessorError",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "oldOwnerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwnerAddress",
+						"type": "address"
+					}
+				],
+				"name": "OwnerChanged",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "action_claimOwnerRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "action_offerOwnerRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "interfaceHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "canImplementInterfaceForAddress",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "donate",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "failsafe_unlock",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "get_ownerAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "get_ownerSuccessorAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC1155BatchReceived",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC1155Received",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC721Received",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "query_isLocked",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "query_isOwnerAddress",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "query_isOwnerSuccessorAddress",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "userData",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "operatorData",
+						"type": "bytes"
+					}
+				],
+				"name": "tokensReceived",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "userData",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "operatorData",
+						"type": "bytes"
+					}
+				],
+				"name": "tokensToSend",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw_coins",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "withdraw_erc1155Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw_erc20Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw_erc721Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "withdraw_erc777Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"action_offerOwnerRole(address)": {
+					"params": {
+						"_address": "The owner successor address."
+					}
+				},
+				"get_ownerAddress()": {
+					"returns": {
+						"_0": "The owner address."
+					}
+				},
+				"get_ownerSuccessorAddress()": {
+					"returns": {
+						"_0": "The owner successor address."
+					}
+				},
+				"query_isLocked()": {
+					"returns": {
+						"_0": "Whether the contract is currently locked."
+					}
+				},
+				"query_isOwnerAddress(address)": {
+					"params": {
+						"_address": "The address that we are checking."
+					},
+					"returns": {
+						"_0": "Whether the address is the owner address."
+					}
+				},
+				"query_isOwnerSuccessorAddress(address)": {
+					"params": {
+						"_address": "The address that we are checking."
+					},
+					"returns": {
+						"_0": "Whether the address is the owner successor address."
+					}
+				},
+				"withdraw_coins(uint256)": {
+					"params": {
+						"_value": "The amount of coins to withdraw."
+					}
+				},
+				"withdraw_erc1155Tokens(address,uint256,uint256,bytes)": {
+					"params": {
+						"_data": "Additional data with no specified format.",
+						"_id": "The ID of the ERC1155 token.",
+						"_tokenAddress": "The address where the ERC1155 token's contract lives.",
+						"_value": "The amount of ERC1155 tokens to withdraw."
+					}
+				},
+				"withdraw_erc20Tokens(address,uint256)": {
+					"params": {
+						"_tokenAddress": "The address where the ERC20 token's contract lives.",
+						"_value": "The amount of ERC20 tokens to withdraw."
+					}
+				},
+				"withdraw_erc721Tokens(address,uint256)": {
+					"params": {
+						"_id": "The ID of the ERC721 token.",
+						"_tokenAddress": "The address where the ERC721 token's contract lives."
+					}
+				},
+				"withdraw_erc777Tokens(address,uint256,bytes)": {
+					"params": {
+						"_data": "Additional data with no specified format.",
+						"_tokenAddress": "The address where the ERC777 token's contract lives.",
+						"_value": "The amount of ERC777 tokens to withdraw."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"errors": {
+				"NotOwnerError(address,address)": [
+					{
+						"notice": "The calling address is not the owner."
+					}
+				],
+				"NotOwnerSuccessorError(address,address)": [
+					{
+						"notice": "The calling address is not the owner successor."
+					}
+				]
+			},
+			"events": {
+				"OwnerChanged(address,address)": {
+					"notice": "A record of the owner address changing."
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"action_claimOwnerRole()": {
+					"notice": "The owner successor can claim the owner role."
+				},
+				"action_offerOwnerRole(address)": {
+					"notice": "The owner can offer the owner role to a successor address."
+				},
+				"donate()": {
+					"notice": "Anyone can call this to donate funds to the contract."
+				},
+				"failsafe_unlock()": {
+					"notice": "The owner can unlock the contract."
+				},
+				"get_ownerAddress()": {
+					"notice": "Returns the owner address."
+				},
+				"get_ownerSuccessorAddress()": {
+					"notice": "Returns the owner successor address."
+				},
+				"query_isLocked()": {
+					"notice": "Returns whether the contract is currently locked."
+				},
+				"query_isOwnerAddress(address)": {
+					"notice": "Returns whether the address is the owner address."
+				},
+				"query_isOwnerSuccessorAddress(address)": {
+					"notice": "Returns whether the address is the owner successor address."
+				},
+				"withdraw_coins(uint256)": {
+					"notice": "The owner can withdraw any amount of coins."
+				},
+				"withdraw_erc1155Tokens(address,uint256,uint256,bytes)": {
+					"notice": "The owner can withdraw any amount of one kind of ERC1155 token."
+				},
+				"withdraw_erc20Tokens(address,uint256)": {
+					"notice": "The owner can withdraw any amount of one kind of ERC20 token."
+				},
+				"withdraw_erc721Tokens(address,uint256)": {
+					"notice": "The owner can withdraw an ERC721 token."
+				},
+				"withdraw_erc777Tokens(address,uint256,bytes)": {
+					"notice": "The owner can withdraw any amount of one kind of ERC777 token."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/standard_contract.sol": "StandardContract"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/standard_contract.sol": {
+			"keccak256": "0xb4af77be7f9ec0243faf1bfaad618cb971cea2c6234863f1b36442aa0c7e68b8",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://53238b10c68849b739a3d77b780b7adf471da160ae38a7e929bb0df1a6d0b2a7",
+				"dweb:/ipfs/QmZJzdYsZCm1ZM6Qtk12yWeJ3yq6FAkBwP5vpDStNghPdc"
+			]
+		}
+	},
+	"version": 1
+}
