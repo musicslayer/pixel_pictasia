@@ -1,0 +1,1440 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "mintFee",
+						"type": "uint256"
+					}
+				],
+				"name": "MintFeeError",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NoRemainingMintsError",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "nftOwner",
+						"type": "address"
+					}
+				],
+				"name": "NotNFTOwnerError",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "ownerAddress",
+						"type": "address"
+					}
+				],
+				"name": "NotOwnerError",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "ownerSuccessorAddress",
+						"type": "address"
+					}
+				],
+				"name": "NotOwnerSuccessorError",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "ApprovalForAll",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "oldOwnerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwnerAddress",
+						"type": "address"
+					}
+				],
+				"name": "OwnerChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "ids",
+						"type": "uint256[]"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "values",
+						"type": "uint256[]"
+					}
+				],
+				"name": "TransferBatch",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "TransferSingle",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "value",
+						"type": "string"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "URI",
+				"type": "event"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"inputs": [],
+				"name": "action_claimOwnerRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "action_offerOwnerRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "accounts",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "ids",
+						"type": "uint256[]"
+					}
+				],
+				"name": "balanceOfBatch",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "interfaceHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "canImplementInterfaceForAddress",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "contractURI",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "donate",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "failsafe_unlock",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "get_description",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "get_imageURI",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "get_name",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "get_nftOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "get_openSeaData",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "get_ownerAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "get_ownerSuccessorAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "get_royaltyAddress",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "get_royaltyBasisPoints",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					}
+				],
+				"name": "isApprovedForAll",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC1155BatchReceived",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC1155Received",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC721Received",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "query_isLocked",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "query_isNFTOwner",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "query_isOwnerAddress",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "query_isOwnerSuccessorAddress",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "salePrice",
+						"type": "uint256"
+					}
+				],
+				"name": "royaltyInfo",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "royaltyAmount",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "ids",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "amounts",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "safeBatchTransferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "safeTransferFrom",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "approved",
+						"type": "bool"
+					}
+				],
+				"name": "setApprovalForAll",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_royaltyAddress",
+						"type": "address"
+					}
+				],
+				"name": "set_royaltyAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_royaltyBasisPoints",
+						"type": "uint256"
+					}
+				],
+				"name": "set_royaltyBasisPoints",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_storeDescription",
+						"type": "string"
+					}
+				],
+				"name": "set_storeDescription",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_storeExternalLinkURI",
+						"type": "string"
+					}
+				],
+				"name": "set_storeExternalLinkURI",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_storeImageURI",
+						"type": "string"
+					}
+				],
+				"name": "set_storeImageURI",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_storeName",
+						"type": "string"
+					}
+				],
+				"name": "set_storeName",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "userData",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "operatorData",
+						"type": "bytes"
+					}
+				],
+				"name": "tokensReceived",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "operator",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "userData",
+						"type": "bytes"
+					},
+					{
+						"internalType": "bytes",
+						"name": "operatorData",
+						"type": "bytes"
+					}
+				],
+				"name": "tokensToSend",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					}
+				],
+				"name": "uri",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw_coins",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "withdraw_erc1155Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw_erc20Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_id",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw_erc721Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_tokenAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "withdraw_erc777Tokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"action_offerOwnerRole(address)": {
+					"params": {
+						"_address": "The owner successor address."
+					}
+				},
+				"get_description(uint256)": {
+					"params": {
+						"_id": "The ID of the NFT."
+					},
+					"returns": {
+						"_0": "The description of the NFT."
+					}
+				},
+				"get_imageURI(uint256)": {
+					"params": {
+						"_id": "The ID of the NFT."
+					},
+					"returns": {
+						"_0": "The image URI of the NFT."
+					}
+				},
+				"get_name(uint256)": {
+					"params": {
+						"_id": "The ID of the NFT."
+					},
+					"returns": {
+						"_0": "The name of the NFT."
+					}
+				},
+				"get_nftOwner(uint256)": {
+					"params": {
+						"_id": "The ID of the NFT."
+					},
+					"returns": {
+						"_0": "The address that owns the NFT."
+					}
+				},
+				"get_openSeaData()": {
+					"returns": {
+						"_0": "The OpenSea data."
+					}
+				},
+				"get_ownerAddress()": {
+					"returns": {
+						"_0": "The owner address."
+					}
+				},
+				"get_ownerSuccessorAddress()": {
+					"returns": {
+						"_0": "The owner successor address."
+					}
+				},
+				"get_royaltyAddress()": {
+					"returns": {
+						"_0": "The address that royalties will be paid to."
+					}
+				},
+				"get_royaltyBasisPoints()": {
+					"returns": {
+						"_0": "The royalty basis points."
+					}
+				},
+				"query_isLocked()": {
+					"returns": {
+						"_0": "Whether the contract is currently locked."
+					}
+				},
+				"query_isNFTOwner(uint256,address)": {
+					"params": {
+						"_address": "The address that we are checking.",
+						"_id": "The ID of the NFT."
+					},
+					"returns": {
+						"_0": "Whether the address owns the NFT."
+					}
+				},
+				"query_isOwnerAddress(address)": {
+					"params": {
+						"_address": "The address that we are checking."
+					},
+					"returns": {
+						"_0": "Whether the address is the owner address."
+					}
+				},
+				"query_isOwnerSuccessorAddress(address)": {
+					"params": {
+						"_address": "The address that we are checking."
+					},
+					"returns": {
+						"_0": "Whether the address is the owner successor address."
+					}
+				},
+				"set_royaltyAddress(address)": {
+					"params": {
+						"_royaltyAddress": "The new address that royalties will be paid to."
+					}
+				},
+				"set_royaltyBasisPoints(uint256)": {
+					"params": {
+						"_royaltyBasisPoints": "The new royalty basis points."
+					}
+				},
+				"set_storeDescription(string)": {
+					"params": {
+						"_storeDescription": "The new store description."
+					}
+				},
+				"set_storeExternalLinkURI(string)": {
+					"params": {
+						"_storeExternalLinkURI": "The new store external link URI."
+					}
+				},
+				"set_storeImageURI(string)": {
+					"params": {
+						"_storeImageURI": "The new store image URI."
+					}
+				},
+				"set_storeName(string)": {
+					"params": {
+						"_storeName": "The new store name."
+					}
+				},
+				"withdraw_coins(uint256)": {
+					"params": {
+						"_value": "The amount of coins to withdraw."
+					}
+				},
+				"withdraw_erc1155Tokens(address,uint256,uint256,bytes)": {
+					"params": {
+						"_data": "Additional data with no specified format.",
+						"_id": "The ID of the ERC1155 token.",
+						"_tokenAddress": "The address where the ERC1155 token's contract lives.",
+						"_value": "The amount of ERC1155 tokens to withdraw."
+					}
+				},
+				"withdraw_erc20Tokens(address,uint256)": {
+					"params": {
+						"_tokenAddress": "The address where the ERC20 token's contract lives.",
+						"_value": "The amount of ERC20 tokens to withdraw."
+					}
+				},
+				"withdraw_erc721Tokens(address,uint256)": {
+					"params": {
+						"_id": "The ID of the ERC721 token.",
+						"_tokenAddress": "The address where the ERC721 token's contract lives."
+					}
+				},
+				"withdraw_erc777Tokens(address,uint256,bytes)": {
+					"params": {
+						"_data": "Additional data with no specified format.",
+						"_tokenAddress": "The address where the ERC777 token's contract lives.",
+						"_value": "The amount of ERC777 tokens to withdraw."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"errors": {
+				"MintFeeError(uint256,uint256)": [
+					{
+						"notice": "The required minting fee has not been paid."
+					}
+				],
+				"NoRemainingMintsError()": [
+					{
+						"notice": "There are no remaining NFT mints available."
+					}
+				],
+				"NotNFTOwnerError(uint256,address,address)": [
+					{
+						"notice": "The address does not own the NFT."
+					}
+				],
+				"NotOwnerError(address,address)": [
+					{
+						"notice": "The calling address is not the owner."
+					}
+				],
+				"NotOwnerSuccessorError(address,address)": [
+					{
+						"notice": "The calling address is not the owner successor."
+					}
+				]
+			},
+			"events": {
+				"OwnerChanged(address,address)": {
+					"notice": "A record of the owner address changing."
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"action_claimOwnerRole()": {
+					"notice": "The owner successor can claim the owner role."
+				},
+				"action_offerOwnerRole(address)": {
+					"notice": "The owner can offer the owner role to a successor address."
+				},
+				"donate()": {
+					"notice": "Anyone can call this to donate funds to the contract."
+				},
+				"failsafe_unlock()": {
+					"notice": "The owner can unlock the contract."
+				},
+				"get_description(uint256)": {
+					"notice": "Returns the description of the NFT."
+				},
+				"get_imageURI(uint256)": {
+					"notice": "Returns the image URI of the NFT."
+				},
+				"get_name(uint256)": {
+					"notice": "Returns the name of the NFT."
+				},
+				"get_nftOwner(uint256)": {
+					"notice": "Returns the address that owns the NFT."
+				},
+				"get_openSeaData()": {
+					"notice": "Returns the OpenSea data."
+				},
+				"get_ownerAddress()": {
+					"notice": "Returns the owner address."
+				},
+				"get_ownerSuccessorAddress()": {
+					"notice": "Returns the owner successor address."
+				},
+				"get_royaltyAddress()": {
+					"notice": "Returns the address that royalties will be paid to."
+				},
+				"get_royaltyBasisPoints()": {
+					"notice": "Returns the royalty basis points."
+				},
+				"query_isLocked()": {
+					"notice": "Returns whether the contract is currently locked."
+				},
+				"query_isNFTOwner(uint256,address)": {
+					"notice": "Returns whether the address owns the NFT."
+				},
+				"query_isOwnerAddress(address)": {
+					"notice": "Returns whether the address is the owner address."
+				},
+				"query_isOwnerSuccessorAddress(address)": {
+					"notice": "Returns whether the address is the owner successor address."
+				},
+				"set_royaltyAddress(address)": {
+					"notice": "The owner can set the address that royalties will be paid to."
+				},
+				"set_royaltyBasisPoints(uint256)": {
+					"notice": "The owner can set the royalty basis points."
+				},
+				"set_storeDescription(string)": {
+					"notice": "The owner can set the store description."
+				},
+				"set_storeExternalLinkURI(string)": {
+					"notice": "The owner can set the store external link URI."
+				},
+				"set_storeImageURI(string)": {
+					"notice": "The owner can set the store image URI."
+				},
+				"set_storeName(string)": {
+					"notice": "The owner can set the store name."
+				},
+				"withdraw_coins(uint256)": {
+					"notice": "The owner can withdraw any amount of coins."
+				},
+				"withdraw_erc1155Tokens(address,uint256,uint256,bytes)": {
+					"notice": "The owner can withdraw any amount of one kind of ERC1155 token."
+				},
+				"withdraw_erc20Tokens(address,uint256)": {
+					"notice": "The owner can withdraw any amount of one kind of ERC20 token."
+				},
+				"withdraw_erc721Tokens(address,uint256)": {
+					"notice": "The owner can withdraw an ERC721 token."
+				},
+				"withdraw_erc777Tokens(address,uint256,bytes)": {
+					"notice": "The owner can withdraw any amount of one kind of ERC777 token."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/pixel_pictasia.sol": "PixelPictasia"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/pixel_pictasia.sol": {
+			"keccak256": "0x06e35721c7f05b403209bbc627ec27d4edaf0d2f29f37d18a2985a6ec758821d",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://0fa27c13cb218b64b78f8c74d5687bab8a8724c9ea3d43c4b57439d766aac60b",
+				"dweb:/ipfs/Qmd1D63twDHb33G99URQi83ctJ4WK7AxBKMYeuVLfAaSEe"
+			]
+		},
+		"contracts/pixel_pictasia_utils.sol": {
+			"keccak256": "0x397a4f2aeb42fd04ed56090b2f468d7465d3d296166477253101315652dded44",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://ab904d42429a61ea08863cf40471a26110828bb7c17159450e5d4888f4527389",
+				"dweb:/ipfs/QmSY37j5Db8T17B3N5xTDQ3bVtZJQh1W1ffC7wJz8MQbSi"
+			]
+		},
+		"contracts/standard_contract.sol": {
+			"keccak256": "0xb4af77be7f9ec0243faf1bfaad618cb971cea2c6234863f1b36442aa0c7e68b8",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://53238b10c68849b739a3d77b780b7adf471da160ae38a7e929bb0df1a6d0b2a7",
+				"dweb:/ipfs/QmZJzdYsZCm1ZM6Qtk12yWeJ3yq6FAkBwP5vpDStNghPdc"
+			]
+		}
+	},
+	"version": 1
+}

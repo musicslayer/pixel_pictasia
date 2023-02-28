@@ -18,7 +18,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/standard_contract.sol": "Base64"
+			"contracts/pixel_pictasia_utils.sol": "Base64"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -26,18 +26,18 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
-		"contracts/standard_contract.sol": {
-			"keccak256": "0xb4af77be7f9ec0243faf1bfaad618cb971cea2c6234863f1b36442aa0c7e68b8",
+		"contracts/pixel_pictasia_utils.sol": {
+			"keccak256": "0x3124de104bd1fefd04c06595fdcf1ac538d2787c41bafd4e20867039465c27e6",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://53238b10c68849b739a3d77b780b7adf471da160ae38a7e929bb0df1a6d0b2a7",
-				"dweb:/ipfs/QmZJzdYsZCm1ZM6Qtk12yWeJ3yq6FAkBwP5vpDStNghPdc"
+				"bzz-raw://2382bf6d308c9642dc4b6a32e369e68977556744ebbbec62bf8302bdab231583",
+				"dweb:/ipfs/QmTsp1b9VJitHdJZipBXnxriXHBRiqKD6gdMpUis1cK9t3"
 			]
 		}
 	},

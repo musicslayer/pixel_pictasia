@@ -1,0 +1,110 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "salePrice",
+						"type": "uint256"
+					}
+				],
+				"name": "royaltyInfo",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "receiver",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "royaltyAmount",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/pixel_pictasia.sol": "IERC2981"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/pixel_pictasia.sol": {
+			"keccak256": "0x06e35721c7f05b403209bbc627ec27d4edaf0d2f29f37d18a2985a6ec758821d",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://0fa27c13cb218b64b78f8c74d5687bab8a8724c9ea3d43c4b57439d766aac60b",
+				"dweb:/ipfs/Qmd1D63twDHb33G99URQi83ctJ4WK7AxBKMYeuVLfAaSEe"
+			]
+		},
+		"contracts/pixel_pictasia_utils.sol": {
+			"keccak256": "0x397a4f2aeb42fd04ed56090b2f468d7465d3d296166477253101315652dded44",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://ab904d42429a61ea08863cf40471a26110828bb7c17159450e5d4888f4527389",
+				"dweb:/ipfs/QmSY37j5Db8T17B3N5xTDQ3bVtZJQh1W1ffC7wJz8MQbSi"
+			]
+		},
+		"contracts/standard_contract.sol": {
+			"keccak256": "0xb4af77be7f9ec0243faf1bfaad618cb971cea2c6234863f1b36442aa0c7e68b8",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://53238b10c68849b739a3d77b780b7adf471da160ae38a7e929bb0df1a6d0b2a7",
+				"dweb:/ipfs/QmZJzdYsZCm1ZM6Qtk12yWeJ3yq6FAkBwP5vpDStNghPdc"
+			]
+		}
+	},
+	"version": 1
+}

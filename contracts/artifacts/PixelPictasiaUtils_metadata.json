@@ -1,0 +1,125 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes1[]",
+						"name": "_buf",
+						"type": "bytes1[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_len",
+						"type": "uint256"
+					}
+				],
+				"name": "adler32",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes1[]",
+						"name": "_buf",
+						"type": "bytes1[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_len",
+						"type": "uint256"
+					}
+				],
+				"name": "crc",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createPNG",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "createPNGString",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/pixel_pictasia_utils.sol": "PixelPictasiaUtils"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/pixel_pictasia_utils.sol": {
+			"keccak256": "0x3124de104bd1fefd04c06595fdcf1ac538d2787c41bafd4e20867039465c27e6",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://2382bf6d308c9642dc4b6a32e369e68977556744ebbbec62bf8302bdab231583",
+				"dweb:/ipfs/QmTsp1b9VJitHdJZipBXnxriXHBRiqKD6gdMpUis1cK9t3"
+			]
+		}
+	},
+	"version": 1
+}
