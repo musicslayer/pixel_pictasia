@@ -346,27 +346,27 @@
 	},
 	"sources": {
 		"contracts/pixel_pictasia.sol": {
-			"keccak256": "0x06e35721c7f05b403209bbc627ec27d4edaf0d2f29f37d18a2985a6ec758821d",
+			"keccak256": "0x5da7215c10fd713bbd6c9c2837e8a7716502ac31d805d6e85d1028974d2c7331",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://0fa27c13cb218b64b78f8c74d5687bab8a8724c9ea3d43c4b57439d766aac60b",
-				"dweb:/ipfs/Qmd1D63twDHb33G99URQi83ctJ4WK7AxBKMYeuVLfAaSEe"
+				"bzz-raw://fb092f16f98899884b7c1d50ffcf8dedacb85913b8690125798b0d596511c6a2",
+				"dweb:/ipfs/QmSqJa1faAWFyUFQY6pi7LGsGNjtVPygccHLwBKfZiDgan"
 			]
 		},
 		"contracts/pixel_pictasia_utils.sol": {
-			"keccak256": "0x397a4f2aeb42fd04ed56090b2f468d7465d3d296166477253101315652dded44",
+			"keccak256": "0x2503e7889fd8f3b113b10cc6763896e4b516be70d80278403a235ac0f77b1f9b",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://ab904d42429a61ea08863cf40471a26110828bb7c17159450e5d4888f4527389",
-				"dweb:/ipfs/QmSY37j5Db8T17B3N5xTDQ3bVtZJQh1W1ffC7wJz8MQbSi"
+				"bzz-raw://000f0f578de3247ec066080ecc1da8436cf164a0b2eca1db20e0f624b6b4b179",
+				"dweb:/ipfs/QmbnHf2RUvwhqVx7SbCyzhDZXF6tP4BfhwTX8o2XZwT6Zx"
 			]
 		},
 		"contracts/standard_contract.sol": {
-			"keccak256": "0xb4af77be7f9ec0243faf1bfaad618cb971cea2c6234863f1b36442aa0c7e68b8",
+			"keccak256": "0x84ffe73e7090fe883c43138453dc48a6db5452ed5169441966d455441d590ea1",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://53238b10c68849b739a3d77b780b7adf471da160ae38a7e929bb0df1a6d0b2a7",
-				"dweb:/ipfs/QmZJzdYsZCm1ZM6Qtk12yWeJ3yq6FAkBwP5vpDStNghPdc"
+				"bzz-raw://d41d7b4f93fea088f48d66a25de5cae214618dbfdc547a169674cd6d39563daf",
+				"dweb:/ipfs/QmP4Kw6xC2jkQj2nfkUhYqNL5Qs3VEruyGhHRwpbiHoqoS"
 			]
 		}
 	},

@@ -46,18 +46,18 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"contracts/standard_contract.sol": {
-			"keccak256": "0xb4af77be7f9ec0243faf1bfaad618cb971cea2c6234863f1b36442aa0c7e68b8",
+			"keccak256": "0x84ffe73e7090fe883c43138453dc48a6db5452ed5169441966d455441d590ea1",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://53238b10c68849b739a3d77b780b7adf471da160ae38a7e929bb0df1a6d0b2a7",
-				"dweb:/ipfs/QmZJzdYsZCm1ZM6Qtk12yWeJ3yq6FAkBwP5vpDStNghPdc"
+				"bzz-raw://d41d7b4f93fea088f48d66a25de5cae214618dbfdc547a169674cd6d39563daf",
+				"dweb:/ipfs/QmP4Kw6xC2jkQj2nfkUhYqNL5Qs3VEruyGhHRwpbiHoqoS"
 			]
 		}
 	},

@@ -13,54 +13,6 @@
 			{
 				"inputs": [
 					{
-						"internalType": "bytes1[]",
-						"name": "_buf",
-						"type": "bytes1[]"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_len",
-						"type": "uint256"
-					}
-				],
-				"name": "adler32",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "pure",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "bytes1[]",
-						"name": "_buf",
-						"type": "bytes1[]"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_len",
-						"type": "uint256"
-					}
-				],
-				"name": "crc",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
 						"internalType": "uint256",
 						"name": "_width",
 						"type": "uint256"
@@ -88,7 +40,7 @@
 								"type": "bytes1[]"
 							}
 						],
-						"internalType": "struct PixelPictasiaUtils.PNGData",
+						"internalType": "struct PNGData",
 						"name": "pngData",
 						"type": "tuple"
 					}
@@ -99,19 +51,6 @@
 						"internalType": "bytes",
 						"name": "",
 						"type": "bytes"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "createPNGString",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "",
-						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -146,11 +85,11 @@
 	},
 	"sources": {
 		"contracts/pixel_pictasia_utils.sol": {
-			"keccak256": "0x85388e76424fa3ec8b7e6c3bc2925b9a9fafeb92d326716c326afd91be66731e",
+			"keccak256": "0x2503e7889fd8f3b113b10cc6763896e4b516be70d80278403a235ac0f77b1f9b",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://607ca453bab211aa01ed58ff2d6d54c2b725a763c0e451e15d524a86b984a926",
-				"dweb:/ipfs/QmaK32TNRmQ3RE4RHyyV56vax9BawURi1HCYVckwY4cEPn"
+				"bzz-raw://000f0f578de3247ec066080ecc1da8436cf164a0b2eca1db20e0f624b6b4b179",
+				"dweb:/ipfs/QmbnHf2RUvwhqVx7SbCyzhDZXF6tP4BfhwTX8o2XZwT6Zx"
 			]
 		}
 	},

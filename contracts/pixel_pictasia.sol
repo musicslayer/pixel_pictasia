@@ -49,15 +49,17 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
     *
     */
 
-    // Helper Contracts
-    PixelPictasiaUtils private constant UTILS = PixelPictasiaUtils(0xBbB0fdADeE8CEB72e1eeEaa0D6F011244a96cb8B);
+    PixelPictasiaUtils private constant UTILS = PixelPictasiaUtils(0xDA0bab807633f07f013f94DD0E6A4F96F8742B53);
 
-    // Chain information.
     uint256 private constant CHAIN_ID = 97;
     string private constant CHAIN_NAME = "Binance Smart Chain Testnet";
 
-    // The number of different colors an NFT owner can set.
-    uint256 private constant NUM_COLORS = 5;
+    uint256 private constant GRID_WIDTH = 3;
+    uint256 private constant GRID_HEIGHT = 3;
+    uint256 private constant TILE_WIDTH = 3;
+    uint256 private constant TILE_HEIGHT = 3;
+
+    uint256 private constant TOTAL_NFTS = GRID_WIDTH * GRID_HEIGHT;
 
     /*
     *
@@ -106,7 +108,7 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
         Built-In Functions
     */
 
-    constructor(bytes memory _data) StandardContract() payable {
+    constructor() StandardContract() payable {
         //assert(block.chainid == CHAIN_ID);
 
         // Defaults are set here, but these can be changed manually after the contract is deployed.
@@ -114,12 +116,14 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
         setRoyaltyBasisPoints(300);
 
         setStoreName(string.concat("Pixel Pictasia NFT Collection (", CHAIN_NAME, ")"));
-        setStoreDescription("A collection of configurable NFT tokens featuring animated pixel art, capped at 100 per network. https://musicslayer.github.io/pixel_pictasia_dapp/");
+        //setStoreDescription("A collection of configurable NFT tokens featuring animated pixel art, capped at 100 per network. https://musicslayer.github.io/pixel_pictasia_dapp/");
+        setStoreDescription("XYZ. https://musicslayer.github.io/pixel_pictasia_dapp/");
         setStoreImageURI("https://raw.githubusercontent.com/musicslayer/pixel_pictasia_dapp/main/store_image.png");
         setStoreExternalLinkURI("https://musicslayer.github.io/pixel_pictasia_dapp/");
 
         // Pre-mint all NFT's and assign them to the address deploying the contract.
-        mintAll(msg.sender, _data);
+        bytes memory data = new bytes(0);
+        mintAll(msg.sender, data);
     }
 
     fallback() external payable {
@@ -286,10 +290,10 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
         if(_id == 0) {
             return "The current image.";
         }
-        else if(_id >= 1 && _id <= 400) {
+        else if(_id >= 1 && _id <= TOTAL_NFTS) {
             NFTConfig memory nftConfig = map_id2NFTConfig[_id];
-            string memory x = uint256ToStringFast(nftConfig.posX);
-            string memory y = uint256ToStringFast(nftConfig.posY);
+            string memory x = uint256ToString(nftConfig.posX);
+            string memory y = uint256ToString(nftConfig.posY);
             string memory color = get3Hex(nftConfig.red, nftConfig.green, nftConfig.blue);
 
             return string.concat("Point = (", x, ",", y, ") --- RGB = ", color);
@@ -300,143 +304,59 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
     }
 
     function createImageURI(uint256 _id) private view returns (string memory) {
-        if(_id > 400) {
+        // Either return a PNG for the tile or for the complete image.
+        if(_id == 0) {
+            return createCompleteURI();
+        }
+        else if(_id <= TOTAL_NFTS) {
+            return createTileURI(_id);
+        }
+        else {
             return "";
         }
+    }
 
-        // Either return a PNG for the pixel, or for the complete image.
+    function createTileURI(uint256 _id) private view returns (string memory) {
+        uint256 N = TILE_WIDTH * TILE_HEIGHT;
+
+        PNGData memory pngData = PNGData(new bytes1[](N), new bytes1[](N), new bytes1[](N));
         NFTConfig memory nftConfig = map_id2NFTConfig[_id];
-        uint256 width = 20;
-        uint256 height = 20;
+        for(uint256 n = 0; n < N; n++) {
+            pngData.red[n] = bytes1(nftConfig.red);
+            pngData.green[n] = bytes1(nftConfig.green);
+            pngData.blue[n] = bytes1(nftConfig.blue);
+        }
 
-        uint256 i = 0;
-        bytes1[] memory imageData = new bytes1[](9999);
+        bytes memory imageData = UTILS.createPNG(TILE_WIDTH, TILE_HEIGHT, pngData);
+        return string(abi.encodePacked("data:image/png;base64,", Base64.encode(abi.encodePacked(imageData))));
+    }
 
-        // PNG Signature
-        imageData[i++] = hex"89";
-        imageData[i++] = hex"50";
-        imageData[i++] = hex"4E";
-        imageData[i++] = hex"47";
-        imageData[i++] = hex"0D";
-        imageData[i++] = hex"0A";
-        imageData[i++] = hex"1A";
-        imageData[i++] = hex"0A";
+    function createCompleteURI() private view returns (string memory) {
+        uint256 N = GRID_WIDTH * TILE_WIDTH * GRID_HEIGHT * TILE_HEIGHT;
 
+        PNGData memory pngData = PNGData(new bytes1[](N), new bytes1[](N), new bytes1[](N));
+        for(uint256 tile = 0; tile < TOTAL_NFTS; tile++) {
+            NFTConfig memory nftConfig = map_id2NFTConfig[tile + 1];
 
+            uint256 row = tile / GRID_WIDTH;
+            uint256 column = tile % GRID_WIDTH;
+            uint256 offsetTile = row * GRID_WIDTH * TILE_WIDTH * TILE_HEIGHT + column * TILE_WIDTH;
 
-        // IHDR Chunck:
-        // Length = 13
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"0D";
+            for(uint256 y = 0; y < TILE_HEIGHT; y++) {
+                uint256 offsetY = y * GRID_WIDTH * TILE_WIDTH;
 
-        // Type = IHDR
-        imageData[i++] = hex"49";
-        imageData[i++] = hex"48";
-        imageData[i++] = hex"44";
-        imageData[i++] = hex"52";
+                for(uint256 x = 0; x < TILE_WIDTH; x++) {
+                    
+                    uint256 fn = offsetTile + offsetY + x;
 
-        // Data
-        // Width
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"01";
+                    pngData.red[fn] = bytes1(nftConfig.red);
+                    pngData.green[fn] = bytes1(nftConfig.green);
+                    pngData.blue[fn] = bytes1(nftConfig.blue);
+                }
+            }
+        }
 
-        // Height
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"01";
-
-        // Bit Depth
-        imageData[i++] = hex"08";
-
-        // Colour Type
-        imageData[i++] = hex"02";
-
-        // Compression Method
-        imageData[i++] = hex"00";
-
-        // Filter Method
-        imageData[i++] = hex"00";
-
-        // Interlace Method
-        imageData[i++] = hex"00";
-
-        // CRC
-        imageData[i++] = hex"90";
-        imageData[i++] = hex"77";
-        imageData[i++] = hex"53";
-        imageData[i++] = hex"DE";
-
-
-
-
-
-
-
-
-        // IDAT Chunck:
-        // Length = 12
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"0C";
-
-        // Type = IDAT
-        imageData[i++] = hex"49";
-        imageData[i++] = hex"44";
-        imageData[i++] = hex"41";
-        imageData[i++] = hex"54";
-
-        // Data
-        // ZLIB CMF
-        imageData[i++] = hex"18";
-        // ZLIB FLG
-        imageData[i++] = hex"57";
-
-        // ZLIB DATA
-
-        // ZLIB ADLER32
-        imageData[i++] = hex"03";
-        imageData[i++] = hex"04";
-        imageData[i++] = hex"01";
-        imageData[i++] = hex"81";
-
-
-        // Black  18 57       63 60 60 60 00 00       00 04 00 01
-        // Grey   18 57       63 68 68 68 00 00       03 04 01 81
-        // White  18 57       63 F8 FF FF 3F 00       05 FE 02 FE
-        
-
-        // Multi  18 57       63 78 2B A3 A2 B4 D1 C7 DE E3 CC FF 4F 0C 8B 3D 97 CC BC F9 8A 81 81 01 00       6B 99 09 7D
-
-        // CRC
-
-
-
-        
-        // IEND Chunk:
-        // Length = 0
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-        imageData[i++] = hex"00";
-
-        // Type = IEND
-        imageData[i++] = hex"49";
-        imageData[i++] = hex"45";
-        imageData[i++] = hex"4E";
-        imageData[i++] = hex"44";
-
-        // CRC
-        imageData[i++] = hex"AE";
-        imageData[i++] = hex"42";
-        imageData[i++] = hex"60";
-        imageData[i++] = hex"82";
-
+        bytes memory imageData = UTILS.createPNG(GRID_WIDTH * TILE_WIDTH, GRID_HEIGHT * TILE_HEIGHT, pngData);
         return string(abi.encodePacked("data:image/png;base64,", Base64.encode(abi.encodePacked(imageData))));
     }
 
@@ -445,9 +365,9 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
     }
 
     function mintAll(address _address, bytes memory _data) private {
-        // ID 0 represents the entire image, ID 1-400 represents the individual pixels.
-        uint256[] memory ids = new uint256[](401);
-        uint256[] memory amounts = new uint256[](401);
+        // ID 0 represents the entire image, IDs >= 1 represent the individual tiles.
+        uint256[] memory ids = new uint256[](TOTAL_NFTS + 1);
+        uint256[] memory amounts = new uint256[](TOTAL_NFTS + 1);
 
         uint256 currentID = 0;
 
@@ -460,8 +380,8 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
         // This is unused, so just use dummy values.
         map_id2NFTConfig[currentID] = NFTConfig(9999, 9999, 0, 0, 0);
 
-        for(uint256 y = 0; y < 20; y++) {
-            for(uint256 x = 0; x < 20; x++) {
+        for(uint256 y = 0; y < GRID_HEIGHT; y++) {
+            for(uint256 x = 0; x < GRID_WIDTH; x++) {
                 currentID++;
 
                 ids[currentID] = currentID;
@@ -535,6 +455,9 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
     */
 
     function setColors(uint256 _id, uint8 _red, uint8 _green, uint8 _blue) private {
+        map_id2NFTConfig[_id].red = _red;
+        map_id2NFTConfig[_id].green = _green;
+        map_id2NFTConfig[_id].blue = _blue;
     }
 
     function setNFTOwner(uint256 _id, address _address) private {
@@ -576,6 +499,21 @@ contract PixelPictasia is StandardContract, IERC1155MetadataURI, IERC2981 {
     /*
         Action Functions
     */
+
+    /// @notice The NFT owner can configure their NFT.
+    /// @param _id The ID of the NFT.
+    /// @param _red The new red value.
+    /// @param _green The new green value.
+    /// @param _blue The new blue value.
+    function action_applyConfig(uint256 _id, uint8 _red, uint8 _green, uint8 _blue) external {
+        lock();
+
+        requireNFTOwner(_id, msg.sender);
+
+        applyConfig(_id, _red, _green, _blue);
+
+        unlock();
+    }
 
     /*
         Query Functions

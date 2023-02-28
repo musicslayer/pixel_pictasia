@@ -2,116 +2,15 @@
 
 pragma solidity 0.8.18;
 
-// import "@openzeppelin/contracts/utils/Base64.sol";
-library Base64 {
-    string internal constant _TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    function encode(bytes memory data) internal pure returns (string memory) {
-        if(data.length == 0) return "";
-        string memory table = _TABLE;
-        string memory result = new string(4 * ((data.length + 2) / 3));
-        assembly {
-            let tablePtr := add(table, 1)
-            let resultPtr := add(result, 32)
-            for {
-                let dataPtr := data
-                let endPtr := add(data, mload(data))
-            } lt(dataPtr, endPtr) {
-            } {
-                // Advance 3 bytes
-                dataPtr := add(dataPtr, 3)
-                let input := mload(dataPtr)
-                mstore8(resultPtr, mload(add(tablePtr, and(shr(18, input), 0x3F))))
-                resultPtr := add(resultPtr, 1) // Advance
-                mstore8(resultPtr, mload(add(tablePtr, and(shr(12, input), 0x3F))))
-                resultPtr := add(resultPtr, 1) // Advance
-                mstore8(resultPtr, mload(add(tablePtr, and(shr(6, input), 0x3F))))
-                resultPtr := add(resultPtr, 1) // Advance
-                mstore8(resultPtr, mload(add(tablePtr, and(input, 0x3F))))
-                resultPtr := add(resultPtr, 1) // Advance
-            }
-            switch mod(mload(data), 3)
-            case 1 {
-                mstore8(sub(resultPtr, 1), 0x3d)
-                mstore8(sub(resultPtr, 2), 0x3d)
-            }
-            case 2 {
-                mstore8(sub(resultPtr, 1), 0x3d)
-            }
-        }
-        return result;
-    }
+struct PNGData {
+    bytes1[] red;
+    bytes1[] green;
+    bytes1[] blue;
 }
-
-/*
-    String Slice Functions
-    Taken from @Arachnid/src/strings.sol
-*/
-
-struct slice {
-    uint _len;
-    uint _ptr;
-}
-
-function slice_join(slice memory self, slice[] memory parts) pure returns (string memory) {
-    if (parts.length == 0)
-        return "";
-
-    uint length = self._len * (parts.length - 1);
-    for(uint i = 0; i < parts.length; i++)
-        length += parts[i]._len;
-
-    string memory ret = new string(length);
-    uint retptr;
-    assembly { retptr := add(ret, 32) }
-
-    for(uint i = 0; i < parts.length; i++) {
-        slice_memcpy(retptr, parts[i]._ptr, parts[i]._len);
-        retptr += parts[i]._len;
-        if (i < parts.length - 1) {
-            slice_memcpy(retptr, self._ptr, self._len);
-            retptr += self._len;
-        }
-    }
-
-    return ret;
-}
-
-function slice_memcpy(uint dest, uint src, uint len) pure {
-    // Copy word-length chunks while possible
-    for(; len >= 32; len -= 32) {
-        assembly {
-            mstore(dest, mload(src))
-        }
-        dest += 32;
-        src += 32;
-    }
-
-    // Copy remaining bytes
-    uint _mask = type(uint).max;
-    if (len > 0) {
-        _mask = 256 ** (32 - len) - 1;
-    }
-    assembly {
-        let srcpart := and(mload(src), not(_mask))
-        let destpart := and(mload(dest), _mask)
-        mstore(dest, or(destpart, srcpart))
-    }
-}
-
-function slice_toSlice(string memory self) pure returns (slice memory) {
-    uint ptr;
-    assembly {
-        ptr := add(self, 0x20)
-    }
-    return slice(bytes(self).length, ptr);
-}
-
-/*
-    Utility Functions
-*/
 
 bytes16 constant HEX_SYMBOLS = "0123456789ABCDEF";
-function get3Hex(uint8 valueA, uint8 valueB, uint8 valueC) pure returns (string memory) {
+function get3Hex(uint256 valueA, uint256 valueB, uint256 valueC) pure returns (string memory) {
+    // Each value must be < 256.
     bytes memory buffer = new bytes(7);
     buffer[0] = "#";
     buffer[1] = HEX_SYMBOLS[(valueA & 0xf0) >> 4];
@@ -124,29 +23,6 @@ function get3Hex(uint8 valueA, uint8 valueB, uint8 valueC) pure returns (string 
     return string(buffer);
 }
 
-bytes16 constant DECIMAL_SYMBOLS = "0123456789";
-function uint256ToStringFast(uint256 _i) pure returns (string memory) {
-    // Only works for values < 1000
-    bytes memory buffer;
-    if(_i < 10) {
-        buffer = new bytes(1);
-        buffer[0] = DECIMAL_SYMBOLS[_i];
-    }
-    else if(_i < 100) {
-        buffer = new bytes(2);
-        buffer[0] = DECIMAL_SYMBOLS[_i / 10];
-        buffer[1] = DECIMAL_SYMBOLS[_i % 10];
-    }
-    else {
-        buffer = new bytes(3);
-        buffer[0] = DECIMAL_SYMBOLS[(_i / 10) / 10];
-        buffer[1] = DECIMAL_SYMBOLS[(_i / 10) % 10];
-        buffer[2] = DECIMAL_SYMBOLS[_i % 10];
-    }
-
-    return string(buffer);
-}
-
 contract PixelPictasiaUtils {
     uint256[256] private CRC_TABLE;
 
@@ -154,75 +30,13 @@ contract PixelPictasiaUtils {
         createCRCTable();
     }
 
-    function crc(bytes1[] memory _buf, uint256 _len) public view returns (uint256) {
-        return update_crc(4294967295, _buf, _len) ^ 4294967295;
-    }
-
-    function adler32(bytes1[] memory _buf, uint256 _len) public pure returns (uint256) {
-        uint256 A = 1;
-        uint256 B = 0;
-        
-        for(uint256 i = 0; i < _len; i++) {
-            A = A + uint8(_buf[i]);
-            B = B + A;
-        }
-        
-        return B * 65536 + A;
-    }
-
-    function createCRCTable() private {
-        for(uint256 n = 0; n < 256; n++) {
-            uint256 c = n;
-
-            for(uint256 k = 0; k < 8; k++) {
-                if(c & 1 == 1) {
-                    c = 3988292384 ^ (c >> 1);
-                }
-                else {
-                    c = c >> 1;
-                }
-            }
-            CRC_TABLE[n] = c;
-        }
-    }
-
-    function update_crc(uint256 _crc, bytes1[] memory _buf, uint256 _len) private view returns (uint256) {
-        uint256 c = _crc;
-
-        for (uint256 n = 0; n < _len; n++) {
-            c = CRC_TABLE[(c ^ uint8(_buf[n])) & 255] ^ (c >> 8);
-        }
-        
-        return c;
-    }
-
-    struct PNGData {
-        bytes1[] red;
-        bytes1[] green;
-        bytes1[] blue;
-    }
-
-    function createPNGString() public view returns (string memory) {
-        PNGData memory pngData = PNGData(new bytes1[](3), new bytes1[](3), new bytes1[](3));
-        pngData.red[0] = hex"FF";
-        pngData.red[1] = hex"00";
-        pngData.red[2] = hex"00";
-        pngData.green[0] = hex"00";
-        pngData.green[1] = hex"FF";
-        pngData.green[2] = hex"00";
-        pngData.blue[0] = hex"00";
-        pngData.blue[1] = hex"00";
-        pngData.blue[2] = hex"FF";
-
-        bytes memory imageData = createPNG(3, 1, pngData);
-        string memory imageDataString = string(imageData);
-
-        return string(abi.encodePacked("data:image/png;base64,", Base64.encode(abi.encodePacked(imageDataString))));
-    }
+    /*
+        PNG Functions
+    */
 
     function createPNG(uint256 _width, uint256 _height, PNGData memory pngData) public view returns (bytes memory) {
         uint256 i = 0;
-        bytes1[] memory imageData = new bytes1[](100);
+        bytes1[] memory imageData = new bytes1[](80 + _height + 3 * _width * _height);
 
         (imageData, i) = addPNGSignature(imageData, i);
         (imageData, i) = addIHDRChunck(imageData, i, _width, _height);
@@ -299,12 +113,30 @@ contract PixelPictasiaUtils {
         return (_imageData, _i);
     }
 
+    // Use this to avoid "stack too deep" errors from excessive local variables.
+    struct IDATStruct {
+        uint256 iLengthIdx;
+        uint256 iLengthStart;
+        uint256 iLengthEnd;
+
+        uint256 iZLIBLengthIdx;
+        uint256 iZLIBLengthStart;
+        uint256 iZLIBLengthEnd;
+
+        uint256 iADLER32Start;
+        uint256 iADLER32End;
+
+        uint256 iCRCStart;
+        uint256 iCRCEnd;
+    }
+
     function addIDATChunck(bytes1[] memory _imageData, uint256 _i, uint256 _width, uint256 _height, PNGData memory pngData) private view returns (bytes1[] memory, uint256) {
+        IDATStruct memory idatStruct = IDATStruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         // (Skip length for now)
-        uint256 iLengthIdx = _i;
+        idatStruct.iLengthIdx = _i;
         _i += 4;
 
-        //uint256 iCRCStart = _i;
+        idatStruct.iCRCStart = _i;
 
         // Type = IDAT
         _imageData[_i++] = hex"49";
@@ -313,7 +145,7 @@ contract PixelPictasiaUtils {
         _imageData[_i++] = hex"54";
 
         // Data
-        uint256 iLengthStart = _i;
+        idatStruct.iLengthStart = _i;
 
         // CMF and FLG
         _imageData[_i++] = hex"78";
@@ -323,59 +155,42 @@ contract PixelPictasiaUtils {
         _imageData[_i++] = hex"01";
 
         // (Skip ZLIB length and ones complement for now)
-        uint256 iZLIBLengthIdx = _i;
+        idatStruct.iZLIBLengthIdx = _i;
         _i += 4;
 
-        //uint256 iADLER32Start = _i;
-        uint256 iZLIBLengthStart = _i;
+        idatStruct.iADLER32Start = _i;
+        idatStruct.iZLIBLengthStart = _i;
 
         // Add rows of pixels.
-        _imageData[_i++] = hex"00"; // Filter
+        uint256 c = 0;
+        for(uint256 y = 0; y < _height; y++) {
+            // Add the zero Filter Type at the start of each row.
+            _imageData[_i++] = hex"00";
 
-        _imageData[_i++] = pngData.red[0];
-        _imageData[_i++] = pngData.red[1];
-        _imageData[_i++] = pngData.red[2];
+            for(uint256 x = 0; x < _width; x++) {
+                _imageData[_i++] = pngData.red[c];
+                _imageData[_i++] = pngData.green[c];
+                _imageData[_i++] = pngData.blue[c];
+                c++;
+            }
+        }
 
-        _imageData[_i++] = pngData.green[0];
-        _imageData[_i++] = pngData.green[1];
-        _imageData[_i++] = pngData.green[2];
-
-        _imageData[_i++] = pngData.blue[0];
-        _imageData[_i++] = pngData.blue[1];
-        _imageData[_i++] = pngData.blue[2];
-
-/*
-        _imageData[_i++] = hex"FF";
-        _imageData[_i++] = hex"00";
-        _imageData[_i++] = hex"00";
-
-        _imageData[_i++] = hex"00";
-        _imageData[_i++] = hex"FF";
-        _imageData[_i++] = hex"00";
-
-        _imageData[_i++] = hex"00";
-        _imageData[_i++] = hex"00";
-        _imageData[_i++] = hex"FF";
-        */
-
-        //uint256 iADLER32End = _i;
-        uint256 iZLIBLengthEnd = _i;
+        idatStruct.iADLER32End = _i;
+        idatStruct.iZLIBLengthEnd = _i;
 
         // ADLER32
-        //(_imageData, _i) = addADLER32(_imageData, _i, iADLER32Start, iADLER32End);
-        (_imageData, _i) = addADLER32(_imageData, _i, iZLIBLengthStart, iZLIBLengthEnd);
+        (_imageData, _i) = addADLER32(_imageData, _i, idatStruct.iADLER32Start, idatStruct.iADLER32End);
 
-        uint256 iLengthEnd = _i;
-        //uint256 iCRCEnd = _i;
+        idatStruct.iLengthEnd = _i;
+        idatStruct.iCRCEnd = _i;
 
         // CRC
-        //(_imageData, _i) = addCRC(_imageData, _i, iCRCStart, iCRCEnd);
-        (_imageData, _i) = addCRC(_imageData, _i, iLengthStart - 4, iLengthEnd);
+        (_imageData, _i) = addCRC(_imageData, _i, idatStruct.iCRCStart, idatStruct.iCRCEnd);
 
         // Fill in length. Do not use _i since we are backfilling an earlier index.
-        (_imageData, iLengthIdx) = add4ByteValue(_imageData, iLengthIdx, iLengthEnd - iLengthStart);
-        (_imageData, iZLIBLengthIdx) = add2ByteValue(_imageData, iZLIBLengthIdx, iZLIBLengthEnd - iZLIBLengthStart);
-        (_imageData, iZLIBLengthIdx) = add2ByteValue(_imageData, iZLIBLengthIdx, 65535 - (iZLIBLengthEnd - iZLIBLengthStart));
+        (_imageData, idatStruct.iLengthIdx) = add4ByteValue(_imageData, idatStruct.iLengthIdx, idatStruct.iLengthEnd - idatStruct.iLengthStart);
+        (_imageData, idatStruct.iZLIBLengthIdx) = add2ByteValue(_imageData, idatStruct.iZLIBLengthIdx, idatStruct.iZLIBLengthEnd - idatStruct.iZLIBLengthStart);
+        (_imageData, idatStruct.iZLIBLengthIdx) = add2ByteValue(_imageData, idatStruct.iZLIBLengthIdx, 65535 - (idatStruct.iZLIBLengthEnd - idatStruct.iZLIBLengthStart));
 
         return (_imageData, _i);
     }
@@ -448,5 +263,51 @@ contract PixelPictasiaUtils {
         _imageData[_i++] = bytes1(uint8((_value & 0xff)));
 
         return (_imageData, _i);
+    }
+
+    /*
+        Checksum Functions
+    */
+
+    function crc(bytes1[] memory _buf, uint256 _len) private view returns (uint256) {
+        return update_crc(4294967295, _buf, _len) ^ 4294967295;
+    }
+
+    function adler32(bytes1[] memory _buf, uint256 _len) private pure returns (uint256) {
+        uint256 A = 1;
+        uint256 B = 0;
+        
+        for(uint256 i = 0; i < _len; i++) {
+            A = A + uint8(_buf[i]);
+            B = B + A;
+        }
+        
+        return B * 65536 + A;
+    }
+
+    function createCRCTable() private {
+        for(uint256 n = 0; n < 256; n++) {
+            uint256 c = n;
+
+            for(uint256 k = 0; k < 8; k++) {
+                if(c & 1 == 1) {
+                    c = 3988292384 ^ (c >> 1);
+                }
+                else {
+                    c = c >> 1;
+                }
+            }
+            CRC_TABLE[n] = c;
+        }
+    }
+
+    function update_crc(uint256 _crc, bytes1[] memory _buf, uint256 _len) private view returns (uint256) {
+        uint256 c = _crc;
+
+        for (uint256 n = 0; n < _len; n++) {
+            c = CRC_TABLE[(c ^ uint8(_buf[n])) & 255] ^ (c >> 8);
+        }
+        
+        return c;
     }
 }
