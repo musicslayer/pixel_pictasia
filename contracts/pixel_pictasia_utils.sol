@@ -196,20 +196,37 @@ contract PixelPictasiaUtils {
         return c;
     }
 
+    struct PNGData {
+        bytes1[] red;
+        bytes1[] green;
+        bytes1[] blue;
+    }
+
     function createPNGString() public view returns (string memory) {
-        bytes memory imageData = createPNG();
+        PNGData memory pngData = PNGData(new bytes1[](3), new bytes1[](3), new bytes1[](3));
+        pngData.red[0] = hex"FF";
+        pngData.red[1] = hex"00";
+        pngData.red[2] = hex"00";
+        pngData.green[0] = hex"00";
+        pngData.green[1] = hex"FF";
+        pngData.green[2] = hex"00";
+        pngData.blue[0] = hex"00";
+        pngData.blue[1] = hex"00";
+        pngData.blue[2] = hex"FF";
+
+        bytes memory imageData = createPNG(3, 1, pngData);
         string memory imageDataString = string(imageData);
 
         return string(abi.encodePacked("data:image/png;base64,", Base64.encode(abi.encodePacked(imageDataString))));
     }
 
-    function createPNG() public view returns (bytes memory) {
+    function createPNG(uint256 _width, uint256 _height, PNGData memory pngData) public view returns (bytes memory) {
         uint256 i = 0;
         bytes1[] memory imageData = new bytes1[](100);
 
         (imageData, i) = addPNGSignature(imageData, i);
-        (imageData, i) = addIHDRChunck(imageData, i, 3, 1);
-        (imageData, i) = addIDATChunck(imageData, i);
+        (imageData, i) = addIHDRChunck(imageData, i, _width, _height);
+        (imageData, i) = addIDATChunck(imageData, i, _width, _height, pngData);
         (imageData, i) = addIENDChunck(imageData, i);
 
         bytes memory trimmedImageData = new bytes(i);
@@ -236,7 +253,6 @@ contract PixelPictasiaUtils {
     function addIHDRChunck(bytes1[] memory _imageData, uint256 _i, uint256 _width, uint256 _height) private view returns (bytes1[] memory, uint256) {
         // (Skip length for now)
         uint256 iLengthIdx = _i;
-
         _i += 4;
 
         uint256 iCRCStart = _i;
@@ -248,7 +264,6 @@ contract PixelPictasiaUtils {
         _imageData[_i++] = hex"52";
 
         // Data
-
         uint256 iLengthStart = _i;
 
         // Width
@@ -284,13 +299,12 @@ contract PixelPictasiaUtils {
         return (_imageData, _i);
     }
 
-    function addIDATChunck(bytes1[] memory _imageData, uint256 _i) private view returns (bytes1[] memory, uint256) {
+    function addIDATChunck(bytes1[] memory _imageData, uint256 _i, uint256 _width, uint256 _height, PNGData memory pngData) private view returns (bytes1[] memory, uint256) {
         // (Skip length for now)
         uint256 iLengthIdx = _i;
-
         _i += 4;
 
-        uint256 iCRCStart = _i;
+        //uint256 iCRCStart = _i;
 
         // Type = IDAT
         _imageData[_i++] = hex"49";
@@ -299,7 +313,6 @@ contract PixelPictasiaUtils {
         _imageData[_i++] = hex"54";
 
         // Data
-
         uint256 iLengthStart = _i;
 
         // CMF and FLG
@@ -311,15 +324,27 @@ contract PixelPictasiaUtils {
 
         // (Skip ZLIB length and ones complement for now)
         uint256 iZLIBLengthIdx = _i;
-
         _i += 4;
 
-        uint256 iADLER32Start = _i;
+        //uint256 iADLER32Start = _i;
         uint256 iZLIBLengthStart = _i;
 
-        // Add a row of pixels.
+        // Add rows of pixels.
         _imageData[_i++] = hex"00"; // Filter
 
+        _imageData[_i++] = pngData.red[0];
+        _imageData[_i++] = pngData.red[1];
+        _imageData[_i++] = pngData.red[2];
+
+        _imageData[_i++] = pngData.green[0];
+        _imageData[_i++] = pngData.green[1];
+        _imageData[_i++] = pngData.green[2];
+
+        _imageData[_i++] = pngData.blue[0];
+        _imageData[_i++] = pngData.blue[1];
+        _imageData[_i++] = pngData.blue[2];
+
+/*
         _imageData[_i++] = hex"FF";
         _imageData[_i++] = hex"00";
         _imageData[_i++] = hex"00";
@@ -331,18 +356,21 @@ contract PixelPictasiaUtils {
         _imageData[_i++] = hex"00";
         _imageData[_i++] = hex"00";
         _imageData[_i++] = hex"FF";
+        */
 
-        uint256 iADLER32End = _i;
+        //uint256 iADLER32End = _i;
         uint256 iZLIBLengthEnd = _i;
 
         // ADLER32
-        (_imageData, _i) = addADLER32(_imageData, _i, iADLER32Start, iADLER32End);
+        //(_imageData, _i) = addADLER32(_imageData, _i, iADLER32Start, iADLER32End);
+        (_imageData, _i) = addADLER32(_imageData, _i, iZLIBLengthStart, iZLIBLengthEnd);
 
         uint256 iLengthEnd = _i;
-        uint256 iCRCEnd = _i;
+        //uint256 iCRCEnd = _i;
 
         // CRC
-        (_imageData, _i) = addCRC(_imageData, _i, iCRCStart, iCRCEnd);
+        //(_imageData, _i) = addCRC(_imageData, _i, iCRCStart, iCRCEnd);
+        (_imageData, _i) = addCRC(_imageData, _i, iLengthStart - 4, iLengthEnd);
 
         // Fill in length. Do not use _i since we are backfilling an earlier index.
         (_imageData, iLengthIdx) = add4ByteValue(_imageData, iLengthIdx, iLengthEnd - iLengthStart);
